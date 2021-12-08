@@ -7,6 +7,9 @@
 
 <h1>You are logged in</h1>
 <a href="{{url_for('logout')}}">Logout</a>
+{%if Admin%}
+<a href="/admin">Admin</a>
+{%endif%}
 {%endblock%}
 {%block script%}
 {%endblock%}

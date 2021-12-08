@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, session, request
-from website import app, bcrypt, db, login_manager
-from website.models import User
+from website import app, bcrypt, db, login_manager, access_levels
+from website.models import User, Admin_users
 from flask_login import UserMixin, login_user, login_required, logout_user, current_user
 import website.form_validation as forms
 
@@ -44,8 +44,9 @@ def register():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    print(current_user.id)
-    return render_template('dashboard.html')
+    if Admin_users.query.filter_by(user_id=current_user.id).first() != None:
+        return render_template('dashboard.html', Admin=True)
+    return render_template('dashboard.html', Admin=False)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
