@@ -1,6 +1,6 @@
 import pip
 packages = ["Flask",
-            "Flask-Admin".
+            "Flask-Admin",
             "Flask-Bcrypt",
             "Flask-Login",
             "Flask-SQLAlchemy",
