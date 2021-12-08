@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import render_template, url_for, flash, redirect, session, request,Flask
+from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager,UserMixin,current_user
@@ -64,7 +65,15 @@ class OwnerView(ModelView):
                     return True
         return False
 
-class File_admin(FileAdmin):
+class File_admin_static(FileAdmin):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            user = Admin_users.query.filter_by(user_id=current_user.id).first()
+            if  user!= None:
+                if user.access <= access_levels['admin']:
+                    return True
+        return False
+class File_admin_ext(FileAdmin):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
@@ -77,4 +86,8 @@ path = op.join(op.dirname(__file__), 'static')
 
 admin.add_view(AdminView(User, db.session))
 admin.add_view(OwnerView(Admin_users, db.session))
-admin.add_view(File_admin(path, '/static/', name='Static Files'))
+admin.add_view(File_admin_static(path, '/static/', name='Static Files'))
+
+
+
+import extensions
