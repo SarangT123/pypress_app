@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%block title%} Homepage {%endblock%}
+{%block css%}../static/style.css{%endblock%}
+{%block scripthead%}
+{%endblock%}
+{%block contents%}
+<div class="login-form">
+    <form method="POST">
+        <h1 class="text-center">Register</h1>
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            {{form.username(class_="form-control")}}
+        </div>
+        <div class="form-group">
+            {{form.password(class_="form-control")}}
+        </div>
+        <div class="text-center">
+            {{form.submit(class_="btn btn-primary align-center")}}
+        </div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+
+
+
+
+{%endblock%}
+{%block script%}
+{%endblock%}

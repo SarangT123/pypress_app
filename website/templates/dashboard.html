@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+{%block title%} Website Name {%endblock%}
+{%block css%}website/static/style.css{%endblock%}
+{%block scripthead%}
+{%endblock%}
+{%block contents%}
+
+<h1>You are logged in</h1>
+<a href="{{url_for('logout')}}">Logout</a>
+{%endblock%}
+{%block script%}
+{%endblock%}
