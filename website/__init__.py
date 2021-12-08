@@ -4,7 +4,9 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager,UserMixin,current_user
 from flask_admin import Admin,AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.contrib.fileadmin import FileAdmin
 from flask_admin.base import BaseView
+import os.path as op
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -62,6 +64,17 @@ class OwnerView(ModelView):
                     return True
         return False
 
+class File_admin(FileAdmin):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            user = Admin_users.query.filter_by(user_id=current_user.id).first()
+            if  user!= None:
+                if user.access <= access_levels['admin']:
+                    return True
+        return False
+
+path = op.join(op.dirname(__file__), 'static')
 
 admin.add_view(AdminView(User, db.session))
 admin.add_view(OwnerView(Admin_users, db.session))
+admin.add_view(File_admin(path, '/static/', name='Static Files'))
