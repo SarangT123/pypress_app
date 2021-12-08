@@ -1,5 +1,5 @@
 from flask import render_template
-from website import app
+from pypress import app
 
 
 @app.errorhandler(404)
@@ -15,3 +15,8 @@ def forbidden(e):
 @app.errorhandler(500)
 def server(e):
     return render_template('500.html'), 500
+
+
+@app.errorhandler(401)
+def server(e):
+    return render_template('401.html'), 401

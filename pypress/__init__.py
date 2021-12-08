@@ -1,9 +1,9 @@
-from flask import render_template, url_for, flash, redirect, session, request,Flask
+from flask import render_template, url_for, flash, redirect, session, request, Flask
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager,UserMixin,current_user
-from flask_admin import Admin,AdminIndexView
+from flask_login import LoginManager, UserMixin, current_user
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.fileadmin import FileAdmin
 from flask_admin.base import BaseView
@@ -15,17 +15,13 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-access_levels={
-    'owner':0,
-    'admin':1,
-    'moderator':2
+access_levels = {
+    'owner': 0,
+    'admin': 1,
+    'moderator': 2
 }
+from pypress.models import User, Admin_users
 
-from website import views
-from website import auth
-from website.models import User,Admin_users
-from website import error_handler
-from website import cli
 
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
@@ -36,51 +32,60 @@ class MyAdminIndexView(AdminIndexView):
                 return False
         else:
             return False
-admin = Admin(app,index_view=MyAdminIndexView())
+
+
+admin = Admin(app, index_view=MyAdminIndexView())
+
 
 class ModeratorView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
-            if  user!= None:
+            if user != None:
                 if user.access <= access_levels['moderator']:
                     return True
         return False
+
 
 class AdminView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
-            if  user!= None:
+            if user != None:
                 if user.access <= access_levels['admin']:
                     return True
         return False
+
 
 class OwnerView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
-            if  user!= None:
+            if user != None:
                 if user.access <= access_levels['owner']:
                     return True
         return False
+
 
 class File_admin_static(FileAdmin):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
-            if  user!= None:
+            if user != None:
                 if user.access <= access_levels['admin']:
                     return True
         return False
+
+
 class File_admin_ext(FileAdmin):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = Admin_users.query.filter_by(user_id=current_user.id).first()
-            if  user!= None:
+            if user != None:
                 if user.access <= access_levels['admin']:
                     return True
         return False
+
 
 path = op.join(op.dirname(__file__), 'static')
 
@@ -88,6 +93,8 @@ admin.add_view(AdminView(User, db.session))
 admin.add_view(OwnerView(Admin_users, db.session))
 admin.add_view(File_admin_static(path, '/static/', name='Static Files'))
 
-
-
 import extensions
+from pypress import cli
+from pypress import error_handler
+from pypress import auth
+from pypress import views        

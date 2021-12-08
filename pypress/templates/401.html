@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404</title>
+    <title>401</title>
 </head>
 
 <body>
@@ -42,15 +42,15 @@
                     </div>
                 </div>
 
-                <p class="p404" data-depth="0.50">404</p>
-                <p class="p404" data-depth="0.10">404</p>
+                <p class="p404" data-depth="0.50">401</p>
+                <p class="p404" data-depth="0.10">401</p>
 
             </div>
 
             <div class="text">
                 <article>
-                    <p>Uh oh! Looks like you got lost. <br>Go back to the homepage if you dare!</p>
-                    <button onclick="back()">i dare!</button>
+                    <p>Uh oh! Looks like you got lost. <br> and this page requires authenitcation</p>
+                    <button onclick="back()">Login</button>
                 </article>
             </div>
 
@@ -61,7 +61,7 @@
         var scene = document.getElementById('scene');
         var parallax = new Parallax(scene);
         function back() {
-            location.replace('/')
+            location.replace('/login')
         }
     </script>
     <style>
@@ -291,7 +291,7 @@
             z-index: 3;
         }
 
-        nav .menu .website_name {
+        nav .menu .pypress_name {
             color: #695681;
             font-weight: 600;
             font-size: 20px;
@@ -304,7 +304,7 @@
             cursor: pointer;
         }
 
-        nav .menu .website_name:hover {
+        nav .menu .pypress_name:hover {
             opacity: 1;
         }
 

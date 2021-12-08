@@ -1,4 +1,4 @@
-website/__pycache__
+pypress/__pycache__
 __pycache__
 .env
-website/site.db
+pypress/site.db

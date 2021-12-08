@@ -1,5 +1,5 @@
 from flask.cli import with_appcontext
-from website import app, db, Admin_users, bcrypt, User
+from pypress import app, db, Admin_users, bcrypt, User
 import click
 
 

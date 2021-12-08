@@ -1,4 +1,4 @@
-from website import db, login_manager, UserMixin
+from pypress import db, login_manager, UserMixin
 from flask_login import UserMixin
 
 

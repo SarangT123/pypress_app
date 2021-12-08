@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, session, request
-from website import app, bcrypt, db, login_manager, access_levels
-from website.models import User, Admin_users
+from pypress import app, bcrypt, db, login_manager, access_levels
+from pypress.models import User, Admin_users
 from flask_login import UserMixin, login_user, login_required, logout_user, current_user
-import website.form_validation as forms
+import pypress.form_validation as forms
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -1,4 +1,4 @@
-from website import app
+from pypress import app
 from flask import render_template, url_for, flash, redirect, session, request
 
 
